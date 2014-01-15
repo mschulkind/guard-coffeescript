@@ -20,7 +20,8 @@ module Guard
         :noop         => false,
         :error_to_js  => false,
         :all_on_start => false,
-        :source_map   => false
+        :source_map   => false,
+        :remove_files => true
     }
 
     # Initialize Guard::CoffeeScript.
@@ -81,7 +82,9 @@ module Guard
     # @raise [:task_has_failed] when run_on_change has failed
     #
     def run_on_removals(paths)
-      Runner.remove(Inspector.clean(paths, :missing_ok => true), watchers, options)
+      if options[:remove_files]
+        Runner.remove(Inspector.clean(paths, :missing_ok => true), watchers, options)
+      end
     end
 
   end
